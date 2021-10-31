@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Shine</string>
+    <string name="enter_email">Enter Email</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="login">Login</string>
+    <string name="logout">Logout</string>
+    <string name="temp_text">Temp Text</string>
+    <string name="add_transaction">Add Transaction</string>
 </resources>
