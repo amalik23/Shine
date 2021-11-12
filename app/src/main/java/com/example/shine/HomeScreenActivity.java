@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 public class HomeScreenActivity extends AppCompatActivity {
@@ -57,9 +58,13 @@ public class HomeScreenActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.homeScreenLogout) {
             logout();
-        } else if (item.getItemId() == R.id.homeScreenTransaction) {
-            // eventually add functionality to switch to transaction screen
-            // could have a dialog to enter in transaction amount and category
+        } else if (item.getItemId() == R.id.homeScreenInfo) {
+            // eventually add functionality to switch to info screen
+            //startActivity(new Intent(this, MainActivity.class));
+            return true;
+        } else if (item.getItemId() == R.id.homeScreenSettings) {
+            // eventually add functionality to switch to settings screen
+            //startActivity(new Intent(this, MainActivity.class));
             return true;
         } else {
             return false;
@@ -74,5 +79,8 @@ public class HomeScreenActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("com.example.shine", Context.MODE_PRIVATE);
         sharedPreferences.edit().putString(MainActivity.emailKey, "").apply();  // wipe out the email
         startActivity(new Intent(this, MainActivity.class));
+    }
+
+    public void newTransac(View view) {
     }
 }

@@ -3,8 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/homeScreenTransaction"
-        android:title="@string/add_transaction" />
+        android:id="@+id/homeScreenInfo"
+        android:title="Info" />
+    <item
+        android:id="@+id/homeScreenSettings"
+        android:title="Settings" />
     <item
         android:id="@+id/homeScreenLogout"
         android:title="@string/logout"
