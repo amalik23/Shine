@@ -52,4 +52,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
 
+    <Button
+        android:id="@+id/newacctbttn"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="100dp"
+        android:text="Don't have an account?"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toTopOf="@+id/forgotpwordbttn"
+        app:layout_constraintTop_toBottomOf="@+id/button"
+        app:layout_constraintLeft_toLeftOf="@+id/editTextTextPassword"
+        app:layout_constraintRight_toRightOf="@+id/editTextTextPassword"
+        app:layout_constraintHorizontal_bias="0.5"/>
+
+    <Button
+        android:id="@+id/forgotpwordbttn"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginBottom="50dp"
+        android:layout_marginTop="10dp"
+        android:text="Forgot your password?"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@+id/editTextTextPassword"
+        app:layout_constraintRight_toRightOf="@+id/editTextTextPassword"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintTop_toBottomOf="@+id/newacctbttn" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
