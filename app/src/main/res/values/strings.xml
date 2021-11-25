@@ -6,4 +6,5 @@
     <string name="logout">Logout</string>
     <string name="temp_text">Temp Text</string>
     <string name="add_transaction">Add Transaction</string>
+    <string name="new_transaction">New Transaction</string>
 </resources>

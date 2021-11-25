@@ -1,6 +1,7 @@
 package com.example.shine;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -11,10 +12,23 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
+
+import java.util.Locale;
 
 public class HomeScreenActivity extends AppCompatActivity {
     private TextView welcomeText;
+
+    // Stuff for transaction popup
+    private AlertDialog.Builder dialogBuilder;
+    private AlertDialog dialog;
+    private EditText newTransactionAmount;
+    private Spinner newTransactionCategory;
+    private Button newTransactionCancel, newTransactionSave;
 
     /**
      * This is the onCreate method that sets the welcome text to the email in sharedPreferences
@@ -81,6 +95,64 @@ public class HomeScreenActivity extends AppCompatActivity {
         startActivity(new Intent(this, MainActivity.class));
     }
 
-    public void newTransac(View view) {
+    /**
+     * This is a private helper method to send the new transaction that the user entered and send it to
+     * the backend
+     *
+     * @param amountEditText EditText from new transaction popup
+     * @param categorySpinner Spinner from new transaction popup
+     * @return the new transaction the user is trying to add
+     */
+    private Transaction saveTransaction(EditText amountEditText, Spinner categorySpinner) {
+        // TODO have this send to the backend
+        double amount = Double.parseDouble(amountEditText.getText().toString());
+        Transaction.TransactionType category = Transaction.TransactionType
+                .valueOf(categorySpinner.getSelectedItem().toString().toUpperCase(Locale.ROOT));
+        Transaction transaction = new Transaction(amount, category);
+        return transaction;
+    }
+
+
+    /**
+     * This function creates the popup that allows a user to enter in a new transaction
+     */
+    public void newTransaction(View view) {
+        dialogBuilder = new AlertDialog.Builder(this);
+
+        // transaction_popup.xml in res/layout/
+        final View transactionPopupView = getLayoutInflater().inflate(R.layout.transaction_popup, null);
+
+        //Set up spinner for transaction_popup
+        Spinner dropdown = transactionPopupView.findViewById(R.id.spinner1);
+
+        // Set up the categories to be from the Transaction class
+        String[] items = new String[Transaction.TransactionType.values().length];
+        int i = 0;
+        for (Transaction.TransactionType type : Transaction.TransactionType.values()) {
+            items[i] = type.toString().charAt(0) + type.toString().substring(1).toLowerCase(Locale.ROOT);
+            i++;
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, items);
+        dropdown.setAdapter(adapter);
+
+        newTransactionAmount = (EditText) transactionPopupView.findViewById(R.id.editTextTextTransactionAmount);
+        newTransactionCategory = (Spinner) transactionPopupView.findViewById(R.id.spinner1);
+
+        dialogBuilder.setView(transactionPopupView);
+        dialog = dialogBuilder.create();
+
+        // Save button
+        dialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Save",
+                (dialogInterface, i1) -> {
+            saveTransaction(newTransactionAmount, newTransactionCategory);
+            dialogInterface.dismiss();
+                });
+
+        // Cancel button
+        dialog.setButton(AlertDialog.BUTTON_POSITIVE, "Cancel",
+                ((dialogInterface, i1) -> dialogInterface.dismiss()));
+
+        dialog.show();
     }
 }
