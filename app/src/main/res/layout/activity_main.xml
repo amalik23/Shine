@@ -18,9 +18,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintVertical_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.4"
         tools:ignore="TextContrastCheck" />
 
     <EditText
@@ -34,7 +34,7 @@
         android:importantForAutofill="no"
         android:inputType="textPassword"
         android:minHeight="48dp"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/loginButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,12 +42,12 @@
         tools:ignore="TextContrastCheck" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/loginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="@string/login"
         android:onClick="login"
+        android:text="@string/login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -57,27 +57,26 @@
         android:id="@+id/newacctbttn"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_marginTop="100dp"
-        android:text="Don't have an account?"
+        android:layout_marginTop="10dp"
+        android:onClick="startRegisterActivity"
+        android:text="@string/don_t_have_an_account"
         android:textSize="10sp"
-        app:layout_constraintBottom_toTopOf="@+id/forgotpwordbttn"
-        app:layout_constraintTop_toBottomOf="@+id/button"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"/>
+        app:layout_constraintTop_toBottomOf="@+id/loginButton" />
 
     <Button
         android:id="@+id/forgotpwordbttn"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_marginBottom="50dp"
         android:layout_marginTop="10dp"
-        android:text="Forgot your password?"
+        android:text="@string/forgot_your_password"
+        android:onClick="startForgotPasswordActivity"
         android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintTop_toBottomOf="@+id/newacctbttn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

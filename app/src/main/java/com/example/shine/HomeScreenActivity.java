@@ -45,8 +45,8 @@ public class HomeScreenActivity extends AppCompatActivity {
         // on the screen for now
         welcomeText = (TextView) findViewById(R.id.textViewHomeScreenWelcome);
         SharedPreferences sharedPreferences = getSharedPreferences("com.example.shine", Context.MODE_PRIVATE);
-        String email = sharedPreferences.getString(MainActivity.emailKey, "");
-        welcomeText.setHint("Welcome " + email);
+        String name = sharedPreferences.getString(MainActivity.nameKey, "");
+        welcomeText.setHint("Welcome " + name);
     }
 
     /**
@@ -91,7 +91,7 @@ public class HomeScreenActivity extends AppCompatActivity {
      */
     private void logout() {
         SharedPreferences sharedPreferences = getSharedPreferences("com.example.shine", Context.MODE_PRIVATE);
-        sharedPreferences.edit().putString(MainActivity.emailKey, "").apply();  // wipe out the email
+        sharedPreferences.edit().putString(MainActivity.uidKey, "").apply();  // wipe out the email
         startActivity(new Intent(this, MainActivity.class));
     }
 

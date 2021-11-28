@@ -7,4 +7,12 @@
     <string name="temp_text">Temp Text</string>
     <string name="add_transaction">Add Transaction</string>
     <string name="new_transaction">New Transaction</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="full_name">Full Name</string>
+    <string name="email">Email</string>
+    <string name="register">Register</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="forgot_your_password">Forgot your password?</string>
+    <string name="confirm">Confirm</string>
 </resources>
