@@ -1,9 +1,5 @@
 package com.example.shine;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,13 +8,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.AuthResult;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
@@ -55,8 +50,8 @@ public class MainActivity extends AppCompatActivity {
             startHomeScreenActivity();
         } else {
             setContentView(R.layout.activity_main);
-            emailField = (EditText) findViewById(R.id.editTextTextEmailAddress);
-            passwordField = (EditText) findViewById(R.id.editTextTextPassword);
+            emailField = findViewById(R.id.editTextTextEmailAddress);
+            passwordField = findViewById(R.id.editTextTextPassword);
         }
     }
 
@@ -83,43 +78,27 @@ public class MainActivity extends AppCompatActivity {
         }
 
         mAuth.signInWithEmailAndPassword(email, password)
-                .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                    @Override
-                    public void onSuccess(AuthResult authResult) {
-                        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                .addOnSuccessListener(authResult -> {
+                    FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-                        if (firebaseUser.isEmailVerified()) {
-                            String uid = firebaseUser.getUid();
-                            FirebaseFirestore db = FirebaseFirestore.getInstance();
-                            DocumentReference docRef = db.collection("users").document(uid);
-                            docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                @Override
-                                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                    User user = documentSnapshot.toObject(User.class);
-                                    SharedPreferences sharedPreferences = getSharedPreferences("com.example.shine", Context.MODE_PRIVATE);
-                                    sharedPreferences.edit().putString(nameKey, user.getName()).apply();
-                                    sharedPreferences.edit().putString(uidKey, uid).apply();
+                    if (firebaseUser.isEmailVerified()) {
+                        String uid = firebaseUser.getUid();
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        DocumentReference docRef = db.collection("users").document(uid);
+                        docRef.get().addOnSuccessListener(documentSnapshot -> {
+                            User user = documentSnapshot.toObject(User.class);
+                            SharedPreferences sharedPreferences = getSharedPreferences("com.example.shine", Context.MODE_PRIVATE);
+                            sharedPreferences.edit().putString(nameKey, user.getName()).apply();
+                            sharedPreferences.edit().putString(uidKey, uid).apply();
 
-                                    startHomeScreenActivity();
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(MainActivity.this, "An error occurred while logging in. Try again.", Toast.LENGTH_LONG).show();
-                                }
-                            });
-                        } else {
-                            firebaseUser.sendEmailVerification();
-                            Toast.makeText(MainActivity.this, "Check email to verify your account.", Toast.LENGTH_LONG).show();
-                        }
+                            startHomeScreenActivity();
+                        }).addOnFailureListener(e -> Toast.makeText(MainActivity.this, "An error occurred while logging in. Try again.", Toast.LENGTH_LONG).show());
+                    } else {
+                        firebaseUser.sendEmailVerification();
+                        Toast.makeText(MainActivity.this, "Check email to verify your account.", Toast.LENGTH_LONG).show();
                     }
                 })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(MainActivity.this, "Failed to login!", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                .addOnFailureListener(e -> Toast.makeText(MainActivity.this, "Failed to login!", Toast.LENGTH_SHORT).show());
     }
 
     /**

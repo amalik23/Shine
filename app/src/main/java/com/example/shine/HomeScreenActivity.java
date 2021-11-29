@@ -1,12 +1,10 @@
 package com.example.shine;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,17 +16,27 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 import java.util.Locale;
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class HomeScreenActivity extends AppCompatActivity {
-    private TextView welcomeText;
 
-    // Stuff for transaction popup
-    private AlertDialog.Builder dialogBuilder;
     private AlertDialog dialog;
-    private EditText newTransactionAmount;
-    private Spinner newTransactionCategory;
-    private Button newTransactionCancel, newTransactionSave;
+    private EditText amountEditText, dateEditText;
+    private Spinner categorySpinner, recurringSpinner;
+    private LocalDate date;
+    private final String emptyCategory = "<Category>";
+    private final String emptyRecurring = "<Recurring>";
+    private final DateTimeFormatter format = DateTimeFormatter.ofPattern("MM/dd/uuuu").withResolverStyle(ResolverStyle.STRICT);
 
     /**
      * This is the onCreate method that sets the welcome text to the email in sharedPreferences
@@ -43,7 +51,7 @@ public class HomeScreenActivity extends AppCompatActivity {
 
         // Display welcome message, can be removed or edited later if we want, just wanted something
         // on the screen for now
-        welcomeText = (TextView) findViewById(R.id.textViewHomeScreenWelcome);
+        TextView welcomeText = findViewById(R.id.textViewHomeScreenWelcome);
         SharedPreferences sharedPreferences = getSharedPreferences("com.example.shine", Context.MODE_PRIVATE);
         String name = sharedPreferences.getString(MainActivity.nameKey, "");
         welcomeText.setHint("Welcome " + name);
@@ -99,59 +107,110 @@ public class HomeScreenActivity extends AppCompatActivity {
      * This is a private helper method to send the new transaction that the user entered and send it to
      * the backend
      *
-     * @param amountEditText EditText from new transaction popup
-     * @param categorySpinner Spinner from new transaction popup
-     * @return the new transaction the user is trying to add
      */
-    private Transaction saveTransaction(EditText amountEditText, Spinner categorySpinner) {
-        // TODO have this send to the backend
+    private void saveTransaction() {
         double amount = Double.parseDouble(amountEditText.getText().toString());
         Transaction.TransactionType category = Transaction.TransactionType
                 .valueOf(categorySpinner.getSelectedItem().toString().toUpperCase(Locale.ROOT));
-        Transaction transaction = new Transaction(amount, category);
-        return transaction;
+        Transaction.Recurring recurring = Transaction.Recurring
+                .valueOf(recurringSpinner.getSelectedItem().toString().toUpperCase(Locale.ROOT));
+
+
+        Transaction transaction = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            transaction = new Transaction(amount, category, recurring, date);
+        }
+
+        // TODO have this send to firebase
     }
 
 
     /**
      * This function creates the popup that allows a user to enter in a new transaction
      */
+    @SuppressLint("CutPasteId")
     public void newTransaction(View view) {
-        dialogBuilder = new AlertDialog.Builder(this);
+        // Stuff for transaction popup
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this).setNeutralButton("Save", null);
 
         // transaction_popup.xml in res/layout/
         final View transactionPopupView = getLayoutInflater().inflate(R.layout.transaction_popup, null);
 
-        //Set up spinner for transaction_popup
-        Spinner dropdown = transactionPopupView.findViewById(R.id.spinner1);
+        //Set up spinners for transaction_popup
+        Spinner dropdownCategory = transactionPopupView.findViewById(R.id.spinnerCategory);
+        Spinner dropdownRecurring = transactionPopupView.findViewById(R.id.spinnerRecurring);
 
         // Set up the categories to be from the Transaction class
-        String[] items = new String[Transaction.TransactionType.values().length];
-        int i = 0;
+        String[] categoryItems = new String[Transaction.TransactionType.values().length + 1];
+        categoryItems[0] = emptyCategory;
+        int i = 1;
         for (Transaction.TransactionType type : Transaction.TransactionType.values()) {
-            items[i] = type.toString().charAt(0) + type.toString().substring(1).toLowerCase(Locale.ROOT);
+            categoryItems[i] = type.toString().charAt(0) + type.toString().substring(1).toLowerCase(Locale.ROOT);
             i++;
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, items);
-        dropdown.setAdapter(adapter);
+        String[] recurringItems = new String[Transaction.Recurring.values().length + 1];
+        recurringItems[0] = emptyRecurring;
+        i = 1;
+        for (Transaction.Recurring type : Transaction.Recurring.values()) {
+            recurringItems[i] = type.toString().charAt(0) + type.toString().substring(1).toLowerCase(Locale.ROOT);
+            i++;
+        }
 
-        newTransactionAmount = (EditText) transactionPopupView.findViewById(R.id.editTextTextTransactionAmount);
-        newTransactionCategory = (Spinner) transactionPopupView.findViewById(R.id.spinner1);
+        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, categoryItems);
+        dropdownCategory.setAdapter(categoryAdapter);
+
+        ArrayAdapter<String> recurringAdapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, recurringItems);
+        dropdownRecurring.setAdapter(recurringAdapter);
+
+        amountEditText = transactionPopupView.findViewById(R.id.editTextTextTransactionAmount);
+        dateEditText = transactionPopupView.findViewById(R.id.editTextDate);
+        categorySpinner = transactionPopupView.findViewById(R.id.spinnerCategory);
+        recurringSpinner = transactionPopupView.findViewById(R.id.spinnerRecurring);
 
         dialogBuilder.setView(transactionPopupView);
         dialog = dialogBuilder.create();
 
-        // Save button
-        dialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Save",
-                (dialogInterface, i1) -> {
-            saveTransaction(newTransactionAmount, newTransactionCategory);
-            dialogInterface.dismiss();
-                });
-
         // Cancel button
         dialog.setButton(AlertDialog.BUTTON_POSITIVE, "Cancel",
                 ((dialogInterface, i1) -> dialogInterface.dismiss()));
+
+        dialog.setOnShowListener(dialogInterface -> {
+            Button save = dialog.getButton(AlertDialog.BUTTON_NEUTRAL);
+            save.setOnClickListener(view1 -> {
+                if (amountEditText.getText().toString().isEmpty()) {
+                    amountEditText.setError("Please enter an amount!");
+                    amountEditText.requestFocus();
+                    return;
+                }
+
+                if (dateEditText.getText().toString().isEmpty()) {
+                    dateEditText.setError("Please enter a date!");
+                    dateEditText.requestFocus();
+                    return;
+                }
+
+                try {
+                    date = LocalDate.parse(dateEditText.getText().toString(), format);
+                } catch(DateTimeParseException e) {
+                    dateEditText.setError("Please enter a valid date!");
+                    dateEditText.requestFocus();
+                    return;
+                }
+
+                if (categorySpinner.getSelectedItem().toString().equals(emptyCategory)) {
+                    ((TextView)categorySpinner.getSelectedView()).setError("");
+                    return;
+                }
+
+                if (recurringSpinner.getSelectedItem().toString().equals(emptyRecurring)) {
+                    ((TextView)recurringSpinner.getSelectedView()).setError("");
+                    return;
+                }
+                saveTransaction();
+                dialog.dismiss();
+            });
+        });
 
         dialog.show();
     }
