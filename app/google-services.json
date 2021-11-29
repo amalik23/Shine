@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "30075516587",
+    "project_id": "shine-4d833",
+    "storage_bucket": "shine-4d833.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:30075516587:android:2b954b03d5db18d6cbe9ee",
+        "android_client_info": {
+          "package_name": "com.example.shine"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "30075516587-n4ui5t7q65nnbo5pc8429ujghc9399gj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwZ5cLBOqxBarT_8p6rZ-YNYaQ7IHp4QE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "30075516587-n4ui5t7q65nnbo5pc8429ujghc9399gj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
