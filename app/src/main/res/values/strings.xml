@@ -19,4 +19,5 @@
     <string name="category">Category:</string>
     <string name="save">Save</string>
     <string name="mm_dd_yyyy">MM/DD/YYYY</string>
+    <string name="vendor_name">Vendor Name</string>
 </resources>

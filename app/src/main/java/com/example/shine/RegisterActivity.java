@@ -44,9 +44,15 @@ public class RegisterActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBarRegister);
     }
 
+    /**
+     * This method gathers all the data from the fields that the user entered and validates and
+     * registers the user to the app in Firebase
+     *
+     * @param view view for onClick
+     */
     public void registerUser(View view) {
-        // register the user in firebase...
 
+        // Get data from all the fields...
         String name = editTextName.getText().toString().trim();
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString();
@@ -109,7 +115,10 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
+        // Progress bar while firebase registers the user
         progressBar.setVisibility(View.VISIBLE);
+
+        // Call on firebase to register the user
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -117,6 +126,8 @@ public class RegisterActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             User user = new User(name, email);
 
+                            // Since they successfully registered, we can add some data about the user
+                            // and store in the cloud
                             FirebaseFirestore db = FirebaseFirestore.getInstance();
                             db.collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                     .set(user, SetOptions.merge())

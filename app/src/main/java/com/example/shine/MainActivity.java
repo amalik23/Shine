@@ -36,8 +36,6 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("com.example.shine", Context.MODE_PRIVATE);
 
         // if sharedPreferences doesn't contain keys initialize it
-        // in the future this could also tell if the user has just installed the app
-        // and we can give them tips
         if (!sharedPreferences.contains(uidKey)) {
             sharedPreferences.edit().putString(uidKey, "").apply();
             sharedPreferences.edit().putString(nameKey, "").apply();
@@ -77,13 +75,17 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
+        // Call on firebase to log the user in
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnSuccessListener(authResult -> {
                     FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
+                    // Check if the user has email verified onSuccess
                     if (firebaseUser.isEmailVerified()) {
                         String uid = firebaseUser.getUid();
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+                        // Get the user's name and ID from firebase and them to shared preferences
                         DocumentReference docRef = db.collection("users").document(uid);
                         docRef.get().addOnSuccessListener(documentSnapshot -> {
                             User user = documentSnapshot.toObject(User.class);
@@ -91,13 +93,16 @@ public class MainActivity extends AppCompatActivity {
                             sharedPreferences.edit().putString(nameKey, user.getName()).apply();
                             sharedPreferences.edit().putString(uidKey, uid).apply();
 
+                            // Finally, go to home screen
                             startHomeScreenActivity();
                         }).addOnFailureListener(e -> Toast.makeText(MainActivity.this, "An error occurred while logging in. Try again.", Toast.LENGTH_LONG).show());
                     } else {
+                        // If the user's email is not verified, resend an email and tell them to go and check it out
                         firebaseUser.sendEmailVerification();
                         Toast.makeText(MainActivity.this, "Check email to verify your account.", Toast.LENGTH_LONG).show();
                     }
                 })
+                // If they could not login, make a Toast telling them
                 .addOnFailureListener(e -> Toast.makeText(MainActivity.this, "Failed to login!", Toast.LENGTH_SHORT).show());
     }
 
@@ -119,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     /**
-     * Private helper method to go to the home screen
+     * Private helper methods to go to different activities
      */
     private void startHomeScreenActivity() {
         Intent intent = new Intent(this, HomeScreenActivity.class);

@@ -1,6 +1,5 @@
 package com.example.shine;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -31,7 +30,7 @@ import java.util.Locale;
 public class HomeScreenActivity extends AppCompatActivity {
 
     private AlertDialog dialog;
-    private EditText amountEditText, dateEditText;
+    private EditText amountEditText, dateEditText, vendorEditText;
     private Spinner categorySpinner, recurringSpinner;
     private LocalDate date;
     private final String emptyCategory = "<Category>";
@@ -109,16 +108,20 @@ public class HomeScreenActivity extends AppCompatActivity {
      *
      */
     private void saveTransaction() {
+
+        // Get all the fields for Transaction
         double amount = Double.parseDouble(amountEditText.getText().toString());
         Transaction.TransactionType category = Transaction.TransactionType
                 .valueOf(categorySpinner.getSelectedItem().toString().toUpperCase(Locale.ROOT));
         Transaction.Recurring recurring = Transaction.Recurring
                 .valueOf(recurringSpinner.getSelectedItem().toString().toUpperCase(Locale.ROOT));
+        String vendor = vendorEditText.getText().toString().trim();
 
 
+        // Make a transaction
         Transaction transaction = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            transaction = new Transaction(amount, category, recurring, date);
+            transaction = new Transaction(amount, category, recurring, date, vendor);
         }
 
         // TODO have this send to firebase
@@ -128,7 +131,6 @@ public class HomeScreenActivity extends AppCompatActivity {
     /**
      * This function creates the popup that allows a user to enter in a new transaction
      */
-    @SuppressLint("CutPasteId")
     public void newTransaction(View view) {
         // Stuff for transaction popup
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this).setNeutralButton("Save", null);
@@ -137,8 +139,8 @@ public class HomeScreenActivity extends AppCompatActivity {
         final View transactionPopupView = getLayoutInflater().inflate(R.layout.transaction_popup, null);
 
         //Set up spinners for transaction_popup
-        Spinner dropdownCategory = transactionPopupView.findViewById(R.id.spinnerCategory);
-        Spinner dropdownRecurring = transactionPopupView.findViewById(R.id.spinnerRecurring);
+        categorySpinner = transactionPopupView.findViewById(R.id.spinnerCategory);
+        recurringSpinner = transactionPopupView.findViewById(R.id.spinnerRecurring);
 
         // Set up the categories to be from the Transaction class
         String[] categoryItems = new String[Transaction.TransactionType.values().length + 1];
@@ -149,6 +151,7 @@ public class HomeScreenActivity extends AppCompatActivity {
             i++;
         }
 
+        // Similar approach for Recurring
         String[] recurringItems = new String[Transaction.Recurring.values().length + 1];
         recurringItems[0] = emptyRecurring;
         i = 1;
@@ -158,15 +161,15 @@ public class HomeScreenActivity extends AppCompatActivity {
         }
 
         ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, categoryItems);
-        dropdownCategory.setAdapter(categoryAdapter);
+        categorySpinner.setAdapter(categoryAdapter);
 
         ArrayAdapter<String> recurringAdapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, recurringItems);
-        dropdownRecurring.setAdapter(recurringAdapter);
+        recurringSpinner.setAdapter(recurringAdapter);
 
+        // Find all the other fields...
         amountEditText = transactionPopupView.findViewById(R.id.editTextTextTransactionAmount);
         dateEditText = transactionPopupView.findViewById(R.id.editTextDate);
-        categorySpinner = transactionPopupView.findViewById(R.id.spinnerCategory);
-        recurringSpinner = transactionPopupView.findViewById(R.id.spinnerRecurring);
+        vendorEditText = transactionPopupView.findViewById(R.id.editTextTextVendor);
 
         dialogBuilder.setView(transactionPopupView);
         dialog = dialogBuilder.create();
@@ -175,6 +178,8 @@ public class HomeScreenActivity extends AppCompatActivity {
         dialog.setButton(AlertDialog.BUTTON_POSITIVE, "Cancel",
                 ((dialogInterface, i1) -> dialogInterface.dismiss()));
 
+        // Workaround solution to have popup, which is an AlertDialog validate fields and not
+        // immediately dismiss the dialog...
         dialog.setOnShowListener(dialogInterface -> {
             Button save = dialog.getButton(AlertDialog.BUTTON_NEUTRAL);
             save.setOnClickListener(view1 -> {
@@ -195,6 +200,12 @@ public class HomeScreenActivity extends AppCompatActivity {
                 } catch(DateTimeParseException e) {
                     dateEditText.setError("Please enter a valid date!");
                     dateEditText.requestFocus();
+                    return;
+                }
+
+                if (vendorEditText.getText().toString().isEmpty()) {
+                    vendorEditText.setError("Please enter the name of vendor!");
+                    vendorEditText.requestFocus();
                     return;
                 }
 

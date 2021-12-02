@@ -24,14 +24,16 @@ public class Transaction {
     private TransactionType category;
     private LocalDate date;
     private Recurring recurring;
+    private String vendor;
 
     public Transaction() {}
 
-    public Transaction(double amount, TransactionType category, Recurring recurring, LocalDate date) {
+    public Transaction(double amount, TransactionType category, Recurring recurring, LocalDate date, String vendor) {
         this.amount = amount;
         this.category = category;
         this.recurring = recurring;
         this.date = date;
+        this.vendor = vendor;
     }
 
     public double getAmount() {
@@ -48,5 +50,9 @@ public class Transaction {
 
     public Recurring getRecurring() {
         return recurring;
+    }
+
+    public String getVendor() {
+        return vendor;
     }
 }
