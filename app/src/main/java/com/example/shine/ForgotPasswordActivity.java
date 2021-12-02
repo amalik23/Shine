@@ -27,7 +27,13 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         emailField = findViewById(R.id.editTextTextForgotEmail);
     }
 
-    public void confirmNewPassword(View view) {
+    /**
+     * This method sends an email to reset the password to an email requested by the user if it is
+     * registered within Firebase
+     *
+     * @param view view for onClick
+     */
+    public void resetPassword(View view) {
         String email = emailField.getText().toString().trim();
 
         if (email.isEmpty()) {
