@@ -137,9 +137,9 @@ public class HomeScreenActivity extends AppCompatActivity {
         }
 
         // TODO have this send to firebase
-        LocalDate currentdate = LocalDate.now();
-        Month month = currentdate.getMonth();
-        int year = currentdate.getYear();
+        LocalDate currentDate = transaction.getDate();
+        Month month = currentDate.getMonth();
+        int year = currentDate.getYear();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
@@ -149,7 +149,7 @@ public class HomeScreenActivity extends AppCompatActivity {
             docData.put("date", transaction.getDate().atStartOfDay());
             docData.put("recurring", transaction.getRecurring());
             docData.put("vendor", transaction.getVendor());
-            db.collection("users").document(user.getUid()).collection("NOVEMBER-2021").add(docData);
+            db.collection("users").document(user.getUid()).collection(month.toString()+"-"+year).add(docData);
         } else {
             // No user is signed in
         }
