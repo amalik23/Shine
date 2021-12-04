@@ -14,17 +14,29 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
+
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.ResolverStyle;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class HomeScreenActivity extends AppCompatActivity {
@@ -125,6 +137,22 @@ public class HomeScreenActivity extends AppCompatActivity {
         }
 
         // TODO have this send to firebase
+        LocalDate currentdate = LocalDate.now();
+        Month month = currentdate.getMonth();
+        int year = currentdate.getYear();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            Map<String, Object> docData = new HashMap<>();
+            docData.put("amount", transaction.getAmount());
+            docData.put("category", transaction.getCategory());
+            docData.put("date", transaction.getDate().atStartOfDay());
+            docData.put("recurring", transaction.getRecurring());
+            docData.put("vendor", transaction.getVendor());
+            db.collection("users").document(user.getUid()).collection("NOVEMBER-2021").add(docData);
+        } else {
+            // No user is signed in
+        }
     }
 
 
