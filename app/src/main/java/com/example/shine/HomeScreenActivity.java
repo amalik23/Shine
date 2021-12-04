@@ -136,7 +136,7 @@ public class HomeScreenActivity extends AppCompatActivity {
             transaction = new Transaction(amount, category, recurring, date, vendor);
         }
 
-        // TODO have this send to firebase
+        // Transaction sent to firebase
         LocalDate currentDate = transaction.getDate();
         Month month = currentDate.getMonth();
         int year = currentDate.getYear();
