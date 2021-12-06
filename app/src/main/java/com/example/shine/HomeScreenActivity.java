@@ -76,8 +76,7 @@ public class HomeScreenActivity extends AppCompatActivity {
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.home_screen_menu, menu);    // home screen menu can be found in /res/menu
+        getMenuInflater().inflate(R.menu.action_bar, menu);
         return true;
     }
 
@@ -89,20 +88,16 @@ public class HomeScreenActivity extends AppCompatActivity {
      */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.homeScreenLogout) {
-            logout();
-        } else if (item.getItemId() == R.id.homeScreenInfo) {
-            // eventually add functionality to switch to info screen
-            //startActivity(new Intent(this, MainActivity.class));
-            return true;
-        } else if (item.getItemId() == R.id.homeScreenSettings) {
-            // eventually add functionality to switch to settings screen
-            //startActivity(new Intent(this, MainActivity.class));
-            return true;
-        } else {
-            return false;
-        }
-        return true;
+        switch (item.getItemId()) {
+            case R.id.action_help:
+                startActivity(new Intent(this, activity_instructions.class));
+                return true;
+            case R.id.homeScreenLogout:
+                logout();
+            //case R.id.action_settings:
+                //  startActivity(new Intent(this, ));
+            }
+            return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -253,4 +248,5 @@ public class HomeScreenActivity extends AppCompatActivity {
 
         dialog.show();
     }
+
 }
