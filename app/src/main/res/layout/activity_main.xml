@@ -52,6 +52,7 @@
         app:iconTint="#03A9F4"
         app:layout_constraintBottom_toTopOf="@+id/newacctbttn"
         app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/rounded_corner"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
@@ -67,6 +68,7 @@
         android:textSize="10sp"
         app:iconTint="#3F51B5"
         app:layout_constraintBottom_toTopOf="@+id/forgotpwordbttn"
+        android:background="@drawable/rounded_corner"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginButton" />
@@ -80,6 +82,7 @@
         android:backgroundTint="#174C4F"
         android:onClick="startForgotPasswordActivity"
         android:text="@string/forgot_your_password"
+        android:background="@drawable/rounded_corner"
         android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
