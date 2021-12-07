@@ -3,9 +3,13 @@ package com.example.shine;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
@@ -16,7 +20,9 @@ public class SplashScreenActivity extends AppCompatActivity {
         //finish();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        
         new Handler().postDelayed(new Runnable() {
+
             @Override
             public void run() {
                 Intent i = new Intent(SplashScreenActivity.this, MainActivity.class);
