@@ -4,8 +4,10 @@
 
     <item
         android:right="35dp"
+        android:id="@+id/logo"
         >
         <bitmap
+
             android:gravity="center"
             android:src="@drawable/splash" />
     </item>
