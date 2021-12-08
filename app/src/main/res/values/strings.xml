@@ -20,4 +20,6 @@
     <string name="save">Save</string>
     <string name="mm_dd_yyyy">MM/DD/YYYY</string>
     <string name="vendor_name">Vendor Name</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="change_password">Change Password</string>
 </resources>

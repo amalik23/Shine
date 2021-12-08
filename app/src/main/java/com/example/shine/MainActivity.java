@@ -19,6 +19,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class MainActivity extends AppCompatActivity {
     static final String uidKey = "uidKey";        // key for shared preferences
     static final String nameKey = "nameKey";
+    static final String emailKey = "emailKey";
     private EditText emailField, passwordField;
     private FirebaseAuth mAuth;
 
@@ -36,9 +37,10 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("com.example.shine", Context.MODE_PRIVATE);
 
         // if sharedPreferences doesn't contain keys initialize it
-        if (!sharedPreferences.contains(uidKey)) {
+        if (!sharedPreferences.contains(uidKey) || !sharedPreferences.contains(nameKey) || !sharedPreferences.contains(emailKey)) {
             sharedPreferences.edit().putString(uidKey, "").apply();
             sharedPreferences.edit().putString(nameKey, "").apply();
+            sharedPreferences.edit().putString(emailKey, "").apply();
         }
 
 
@@ -92,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
                             SharedPreferences sharedPreferences = getSharedPreferences("com.example.shine", Context.MODE_PRIVATE);
                             sharedPreferences.edit().putString(nameKey, user.getName()).apply();
                             sharedPreferences.edit().putString(uidKey, uid).apply();
+                            sharedPreferences.edit().putString(emailKey, user.getEmail()).apply();
 
                             // Finally, go to home screen
                             startHomeScreenActivity();
