@@ -60,13 +60,6 @@ public class HomeScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
-
-        // Display welcome message, can be removed or edited later if we want, just wanted something
-        // on the screen for now
-        TextView welcomeText = findViewById(R.id.textViewHomeScreenWelcome);
-        SharedPreferences sharedPreferences = getSharedPreferences("com.example.shine", Context.MODE_PRIVATE);
-        String name = sharedPreferences.getString(MainActivity.nameKey, "");
-        welcomeText.setHint("Welcome " + name);
     }
 
     /**
@@ -93,12 +86,10 @@ public class HomeScreenActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.homeScreenLogout) {
             logout();
         } else if (item.getItemId() == R.id.homeScreenInfo) {
-            // eventually add functionality to switch to info screen
-            //startActivity(new Intent(this, MainActivity.class));
+            startActivity(new Intent(this, InfoActivity.class));
             return true;
         } else if (item.getItemId() == R.id.homeScreenSettings) {
-            // eventually add functionality to switch to settings screen
-            //startActivity(new Intent(this, MainActivity.class));
+            startActivity(new Intent(this, SettingsActivity.class));
             return true;
         } else {
             return false;
