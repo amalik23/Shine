@@ -114,6 +114,11 @@ public class HomeScreenActivity extends AppCompatActivity {
         startActivity(new Intent(this, MainActivity.class));
     }
 
+    public void chartPage(View view){
+        Intent graphIntent = new Intent(this, GraphsScreenActivity.class);
+        startActivity(graphIntent);
+    }
+
     /**
      * This is a private helper method to send the new transaction that the user entered and send it to
      * the backend
