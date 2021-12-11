@@ -73,11 +73,9 @@ public class HomeScreenActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.homeScreenLogout) {
             logout();
         } else if (item.getItemId() == R.id.homeScreenInfo) {
-            // eventually add functionality to switch to info screen
-            //startActivity(new Intent(this, MainActivity.class));
+            startActivity(new Intent(this, InfoActivity.class));
             return true;
         } else if (item.getItemId() == R.id.homeScreenSettings) {
-            // eventually add functionality to switch to settings screen
             startActivity(new Intent(this, SettingsActivity.class));
             return true;
         } else {
