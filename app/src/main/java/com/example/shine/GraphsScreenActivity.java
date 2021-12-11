@@ -90,7 +90,7 @@ public class GraphsScreenActivity extends AppCompatActivity {
         pieChart.setUsePercentValues(true);
         pieChart.setEntryLabelTextSize(12);
         pieChart.setEntryLabelColor(Color.BLACK);
-        pieChart.setCenterText("Previous Month's Expense Breakdown");
+        pieChart.setCenterText("Selected Month's Expense Breakdown");
         pieChart.setCenterTextSize(24);
         pieChart.getDescription().setEnabled(false);
 
@@ -138,6 +138,10 @@ public class GraphsScreenActivity extends AppCompatActivity {
 
                                 // Print and display the Rank and Name
                                 entries.add(new PieEntry(perc, key));
+                            }
+
+                            if(entries.size() == 0){
+                                pieChart.setCenterText("No Transaction Data in Selected Month");
                             }
 
                             ArrayList<Integer> colors = new ArrayList<>();
