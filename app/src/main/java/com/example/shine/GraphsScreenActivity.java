@@ -9,6 +9,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,7 +46,42 @@ public class GraphsScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graphs_screen);
-        pieChart();
+
+        Spinner monthSpin = findViewById(R.id.monthCategory);
+        Spinner yearSpin = findViewById(R.id.yearCategory);
+
+        String[] monthItems = new String[]{"JANUARY","FEBRUARY","MARCH","APRIL",
+                "JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"};
+
+        int current_year = LocalDate.now().getYear();
+
+        String[] yearItems = new String[11];
+
+        for(int i = 0; i < 11; i ++){
+            yearItems[i] = ((Integer)(current_year - i)).toString();
+        }
+
+        LocalDate past = LocalDate.now().minusMonths(1);
+        Month month = past.getMonth();
+        int year = past.getYear();
+
+        ArrayAdapter<String> monthAdapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, monthItems);
+        monthSpin.setAdapter(monthAdapter);
+
+        ArrayAdapter<String> yearAdapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, yearItems);
+        yearSpin.setAdapter(yearAdapter);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void generateGraph(View view){
+        Spinner monthSpin = findViewById(R.id.monthCategory);
+        Spinner yearSpin = findViewById(R.id.yearCategory);
+
+        String month = monthSpin.getSelectedItem().toString();
+        String year_s = yearSpin.getSelectedItem().toString();
+        int year = Integer.parseInt(year_s);
+
+        pieChart(month, year);
     }
 
     private void setupPieChart(){
@@ -53,7 +90,7 @@ public class GraphsScreenActivity extends AppCompatActivity {
         pieChart.setUsePercentValues(true);
         pieChart.setEntryLabelTextSize(12);
         pieChart.setEntryLabelColor(Color.BLACK);
-        pieChart.setCenterText("Previous Month's Expense Breakdown");
+        pieChart.setCenterText("Selected Month's Expense Breakdown");
         pieChart.setCenterTextSize(24);
         pieChart.getDescription().setEnabled(false);
 
@@ -66,12 +103,9 @@ public class GraphsScreenActivity extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void pieChart(){
+    private void pieChart(String month, int year){
         db = FirebaseFirestore.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        LocalDate past = LocalDate.now().minusMonths(1);
-        Month month = past.getMonth();
-        int year = past.getYear();
 
         db.collection("users").document(user.getUid()).collection(month.toString()+"-"+year)
             .get()
@@ -104,6 +138,10 @@ public class GraphsScreenActivity extends AppCompatActivity {
 
                                 // Print and display the Rank and Name
                                 entries.add(new PieEntry(perc, key));
+                            }
+
+                            if(entries.size() == 0){
+                                pieChart.setCenterText("No Transaction Data in Selected Month");
                             }
 
                             ArrayList<Integer> colors = new ArrayList<>();
