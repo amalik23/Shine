@@ -44,6 +44,7 @@ public class GraphsScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graphs_screen);
+        pieChart();
     }
 
     private void setupPieChart(){
@@ -65,7 +66,7 @@ public class GraphsScreenActivity extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void pieChart(View view){
+    private void pieChart(){
         db = FirebaseFirestore.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         LocalDate past = LocalDate.now().minusMonths(1);
