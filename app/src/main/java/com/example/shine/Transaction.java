@@ -1,6 +1,7 @@
 package com.example.shine;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Transaction {
 
@@ -22,13 +23,13 @@ public class Transaction {
 
     private double amount;
     private TransactionType category;
-    private LocalDate date;
+    private int date;
     private Recurring recurring;
     private String vendor;
 
     public Transaction() {}
 
-    public Transaction(double amount, TransactionType category, Recurring recurring, LocalDate date, String vendor) {
+    public Transaction(double amount, TransactionType category, Recurring recurring, int date, String vendor) {
         this.amount = amount;
         this.category = category;
         this.recurring = recurring;
@@ -44,7 +45,7 @@ public class Transaction {
         return category;
     }
 
-    public LocalDate getDate() {
+    public int getDate() {
         return date;
     }
 

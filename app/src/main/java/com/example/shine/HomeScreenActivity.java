@@ -30,6 +30,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -44,7 +45,7 @@ public class HomeScreenActivity extends AppCompatActivity {
     private AlertDialog dialog;
     private EditText amountEditText, dateEditText, vendorEditText;
     private Spinner categorySpinner, recurringSpinner;
-    private LocalDate date;
+    private LocalDateTime date;
     private final String emptyCategory = "<Category>";
     private final String emptyRecurring = "<Recurring>";
     private final DateTimeFormatter format = DateTimeFormatter.ofPattern("MM/dd/uuuu").withResolverStyle(ResolverStyle.STRICT);
@@ -105,6 +106,11 @@ public class HomeScreenActivity extends AppCompatActivity {
         startActivity(new Intent(this, MainActivity.class));
     }
 
+    public void chartPage(View view){
+        Intent graphIntent = new Intent(this, GraphsScreenActivity.class);
+        startActivity(graphIntent);
+    }
+
     /**
      * This is a private helper method to send the new transaction that the user entered and send it to
      * the backend
@@ -124,11 +130,11 @@ public class HomeScreenActivity extends AppCompatActivity {
         // Make a transaction
         Transaction transaction = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            transaction = new Transaction(amount, category, recurring, date, vendor);
+            transaction = new Transaction(amount, category, recurring, date.getDayOfMonth(), vendor);
         }
 
-        // TODO have this send to firebase
-        LocalDate currentDate = transaction.getDate();
+        // Transaction sent to firebase
+        LocalDateTime currentDate = date;
         Month month = currentDate.getMonth();
         int year = currentDate.getYear();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -137,7 +143,7 @@ public class HomeScreenActivity extends AppCompatActivity {
             Map<String, Object> docData = new HashMap<>();
             docData.put("amount", transaction.getAmount());
             docData.put("category", transaction.getCategory());
-            docData.put("date", transaction.getDate().atStartOfDay());
+            docData.put("date", transaction.getDate());
             docData.put("recurring", transaction.getRecurring());
             docData.put("vendor", transaction.getVendor());
             db.collection("users").document(user.getUid()).collection(month.toString()+"-"+year).add(docData);
@@ -215,7 +221,7 @@ public class HomeScreenActivity extends AppCompatActivity {
                 }
 
                 try {
-                    date = LocalDate.parse(dateEditText.getText().toString(), format);
+                    date = LocalDate.parse(dateEditText.getText().toString(), format).atStartOfDay();
                 } catch(DateTimeParseException e) {
                     dateEditText.setError("Please enter a valid date!");
                     dateEditText.requestFocus();
