@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.data.PieEntry;
@@ -15,6 +16,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -42,22 +44,26 @@ public class GraphsScreenActivity extends AppCompatActivity {
         LocalDate past = LocalDate.now().minusMonths(1);
         Month month = past.getMonth();
         int year = past.getYear();
+
         ArrayList<PieEntry> entries = new ArrayList<>();
         ArrayList<Transaction> transactions = new ArrayList<>();
-        final QueryDocumentSnapshot[] document1 = new QueryDocumentSnapshot[1];
-        final String[] id = new String[1];
+
         db.collection("users").document(user.getUid()).collection(month.toString()+"-"+year)
             .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
+                            Log.d("TAG", "HERE");
+                            for (DocumentSnapshot document : task.getResult()) {
                                 Transaction transaction = document.toObject(Transaction.class);
                                 transactions.add(transaction);
+                                Log.d("TAG", transaction.getVendor());
+                                TextView textView = findViewById(R.id.textView);
+                                textView.setText(transaction.getVendor());
                             }
                         } else {
-                            //Log.d(TAG, "Error getting documents: ", task.getException());
+                            Log.d("TAG", "Error getting documents: ", task.getException());
                         }
                     }
                 });
