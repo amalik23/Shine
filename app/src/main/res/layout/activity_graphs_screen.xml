@@ -42,6 +42,7 @@
         android:onClick="generateGraph"
         android:text="Generate Graph"
         android:textSize="20sp"
+        android:background="@drawable/rounded_corner"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
