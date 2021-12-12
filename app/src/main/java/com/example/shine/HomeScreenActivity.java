@@ -70,8 +70,7 @@ public class HomeScreenActivity extends AppCompatActivity {
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.home_screen_menu, menu);    // home screen menu can be found in /res/menu
+        getMenuInflater().inflate(R.menu.action_bar, menu);
         return true;
     }
 
@@ -250,4 +249,5 @@ public class HomeScreenActivity extends AppCompatActivity {
 
         dialog.show();
     }
+
 }

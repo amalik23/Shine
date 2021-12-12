@@ -8,8 +8,8 @@
     <item
         android:id="@+id/homeScreenSettings"
         android:title="Settings" />
-    <item
-        android:id="@+id/homeScreenLogout"
-        android:title="@string/logout"
-        app:showAsAction="never" />
+<!--    <item-->
+<!--        android:id="@+id/homeScreenLogout"-->
+<!--        android:title="@string/logout"-->
+<!--        app:showAsAction="never" />-->
 </menu>

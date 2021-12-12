@@ -4,8 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -22,6 +29,9 @@ public class MainActivity extends AppCompatActivity {
     static final String emailKey = "emailKey";
     private EditText emailField, passwordField;
     private FirebaseAuth mAuth;
+
+    //animate
+    ImageView i;
 
     /**
      * Method checks if an email already exists within SharedPreferences and goes to the home screen
@@ -43,8 +53,6 @@ public class MainActivity extends AppCompatActivity {
             sharedPreferences.edit().putString(emailKey, "").apply();
         }
 
-
-
         // if a username exists, go to home screen, otherwise just have login screen
         if (!sharedPreferences.getString(uidKey, "").equals("")) {
             startHomeScreenActivity();
@@ -53,6 +61,15 @@ public class MainActivity extends AppCompatActivity {
             emailField = findViewById(R.id.editTextTextEmailAddress);
             passwordField = findViewById(R.id.editTextTextPassword);
         }
+    }
+
+    //rotate logo
+    @Override
+    public void onStart() {
+        super.onStart();
+        i = (ImageView) findViewById(R.id.imageView3);
+        Animation a = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotation);
+        i.startAnimation(a);
     }
 
     /**
@@ -143,4 +160,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ForgotPasswordActivity.class);
         startActivity(intent);
     }
+
+
+
 }
