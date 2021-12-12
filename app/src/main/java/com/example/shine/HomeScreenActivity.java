@@ -253,7 +253,29 @@ public class HomeScreenActivity extends AppCompatActivity {
 
 
     public void setUpTable(View view){
+        //list component to be populated
         ListView transacList = findViewById(R.id.transacList);
+
+        //firestore db and user to be referenced
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        //stolen code from graphScreenActivity, to get month & years for iteration
+        String[] monthItems = new String[]{"JANUARY","FEBRUARY","MARCH","APRIL",
+                "JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"};
+
+        int current_year = LocalDate.now().getYear();
+
+        String[] yearItems = new String[11];
+
+        for(int i = 0; i < 11; i ++){
+            yearItems[i] = ((Integer)(current_year - i)).toString();
+        }
+
+        LocalDate past = LocalDate.now().minusMonths(1);
+        Month month = past.getMonth();
+        int year = past.getYear();
+
 
     }
 
