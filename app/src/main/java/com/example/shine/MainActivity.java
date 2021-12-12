@@ -64,13 +64,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //rotate logo
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        i = (ImageView) findViewById(R.id.imageView3);
-//        Animation a = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotation);
-//        i.startAnimation(a);
-//    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        i = (ImageView) findViewById(R.id.imageView3);
+        Animation a = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotation);
+        i.startAnimation(a);
+    }
 
     /**
      * Simple login method for now that just checks if any email and password were entered
