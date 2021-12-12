@@ -4,11 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
@@ -29,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     static final String emailKey = "emailKey";
     private EditText emailField, passwordField;
     private FirebaseAuth mAuth;
+    private SharedPreferences sharedPreferences;
 
     //animate
     ImageView i;
@@ -44,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         mAuth = FirebaseAuth.getInstance();
-        SharedPreferences sharedPreferences = getSharedPreferences("com.example.shine", Context.MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("com.example.shine", Context.MODE_PRIVATE);
 
         // if sharedPreferences doesn't contain keys initialize it
         if (!sharedPreferences.contains(uidKey) || !sharedPreferences.contains(nameKey) || !sharedPreferences.contains(emailKey)) {
@@ -67,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
+        if (!sharedPreferences.getString(emailKey, "").equals(""))
+            return;
         i = (ImageView) findViewById(R.id.imageView3);
         Animation a = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotation);
         i.startAnimation(a);

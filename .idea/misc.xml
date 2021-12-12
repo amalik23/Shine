@@ -5,6 +5,7 @@
       <map>
         <entry key="../../../../../../layout/custom_preview.xml" value="0.14322916666666666" />
         <entry key="..\:/Users/ayubh/AndroidStudioProjects/Shine/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3828125" />
+        <entry key="..\:/Users/ayubh/AndroidStudioProjects/Shine/app/src/main/res/drawable/splash_background.xml" value="0.3453703703703704" />
         <entry key="..\:/Users/ayubh/AndroidStudioProjects/Shine/app/src/main/res/layout/activity_forgot_password.xml" value="0.24818840579710144" />
         <entry key="..\:/Users/ayubh/AndroidStudioProjects/Shine/app/src/main/res/layout/activity_home_screen.xml" value="0.28306159420289856" />
         <entry key="..\:/Users/ayubh/AndroidStudioProjects/Shine/app/src/main/res/layout/activity_main.xml" value="0.28306159420289856" />
@@ -15,29 +16,6 @@
         <entry key="..\:/Users/ethan/School/cs407/Shine-git/app/src/main/res/layout/activity_home_screen.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/ethan/School/cs407/Shine-git/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/ethan/School/cs407/Shine-git/app/src/main/res/menu/home_screen_menu.xml" value="0.13020833333333334" />
-        <entry key="..\:/Users/raaha/Desktop/Shine/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.15364583333333334" />
-        <entry key="..\:/Users/raaha/Desktop/Shine/app/src/main/res/drawable/bg_gradient.xml" value="0.215625" />
-        <entry key="..\:/Users/raaha/Desktop/Shine/app/src/main/res/drawable/ic_help_24.xml" value="0.18697916666666667" />
-        <entry key="..\:/Users/raaha/Desktop/Shine/app/src/main/res/drawable/ic_launcher_background.xml" value="0.15364583333333334" />
-        <entry key="..\:/Users/raaha/Desktop/Shine/app/src/main/res/drawable/ic_logout_icon_138409.xml" value="0.18697916666666667" />
-        <entry key="..\:/Users/raaha/Desktop/Shine/app/src/main/res/drawable/ic_logout_svgrepo_com.xml" value="0.18697916666666667" />
-        <entry key="..\:/Users/raaha/Desktop/Shine/app/src/main/res/drawable/ic_settings_24.xml" value="0.18697916666666667" />
-        <entry key="..\:/Users/raaha/Desktop/Shine/app/src/main/res/drawable/rounded_corner.xml" value="0.215625" />
-        <entry key="..\:/Users/raaha/Desktop/Shine/app/src/main/res/drawable/shine logo_background.xml" value="0.15364583333333334" />
-        <entry key="..\:/Users/raaha/Desktop/Shine/app/src/main/res/drawable/splash_background.xml" value="0.215625" />
-        <entry key="..\:/Users/raaha/Desktop/Shine/app/src/main/res/layout/activity_forgot_password.xml" value="0.19947916666666668" />
-        <entry key="..\:/Users/raaha/Desktop/Shine/app/src/main/res/layout/activity_graphs_screen.xml" value="0.18489583333333334" />
-        <entry key="..\:/Users/raaha/Desktop/Shine/app/src/main/res/layout/activity_home_screen.xml" value="0.2" />
-        <entry key="..\:/Users/raaha/Desktop/Shine/app/src/main/res/layout/activity_info.xml" value="0.1947463768115942" />
-        <entry key="..\:/Users/raaha/Desktop/Shine/app/src/main/res/layout/activity_instructions.xml" value="0.264" />
-        <entry key="..\:/Users/raaha/Desktop/Shine/app/src/main/res/layout/activity_main.xml" value="0.176" />
-        <entry key="..\:/Users/raaha/Desktop/Shine/app/src/main/res/layout/activity_register.xml" value="0.264" />
-        <entry key="..\:/Users/raaha/Desktop/Shine/app/src/main/res/layout/activity_settings.xml" value="0.264" />
-        <entry key="..\:/Users/raaha/Desktop/Shine/app/src/main/res/layout/activity_splash_screen.xml" value="0.19947916666666668" />
-        <entry key="..\:/Users/raaha/Desktop/Shine/app/src/main/res/layout/password_popup.xml" value="0.1947463768115942" />
-        <entry key="..\:/Users/raaha/Desktop/Shine/app/src/main/res/layout/transaction_popup.xml" value="0.19947916666666668" />
-        <entry key="..\:/Users/raaha/Desktop/Shine/app/src/main/res/menu/action_bar.xml" value="0.19947916666666668" />
-        <entry key="..\:/Users/raaha/Desktop/Shine/app/src/main/res/menu/home_screen_menu.xml" value="0.264" />
         <entry key="app/src/main/res/layout/activity_graphs_screen.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_home_screen.xml" value="0.128125" />
         <entry key="app/src/main/res/layout/transaction_popup.xml" value="0.128125" />
