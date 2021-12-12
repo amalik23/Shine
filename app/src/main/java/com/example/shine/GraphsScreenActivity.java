@@ -107,7 +107,7 @@ public class GraphsScreenActivity extends AppCompatActivity {
         pieChart.setEntryLabelTextSize(12);
         pieChart.setEntryLabelColor(Color.BLACK);
         pieChart.setCenterText("Selected Month's Expense Breakdown");
-        pieChart.setCenterTextSize(24);
+        pieChart.setCenterTextSize(22);
         pieChart.getDescription().setEnabled(false);
 
         Legend l = pieChart.getLegend();

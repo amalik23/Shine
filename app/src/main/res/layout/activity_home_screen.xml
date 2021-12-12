@@ -16,6 +16,7 @@
         android:text="@string/new_transaction"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/ChartButton"
+        app:layout_constraintTop_toBottomOf="@+id/textView11"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -23,24 +24,23 @@
         android:id="@+id/ChartButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="341dp"
-        android:layout_marginBottom="41dp"
+        android:layout_marginBottom="30dp"
         android:background="@drawable/rounded_corner"
         android:onClick="chartPage"
         android:text="View Spending Breakdown"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView2"
+        app:layout_constraintBottom_toTopOf="@+id/transacList"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/transacButton"
         app:layout_constraintVertical_bias="0.277" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="60dp"
         android:layout_marginBottom="112dp"
         android:text="Welcome!"
         android:textSize="34sp"
@@ -56,12 +56,12 @@
         android:id="@+id/imageView2"
         android:layout_width="160dp"
         android:layout_height="160dp"
-        android:layout_marginBottom="100dp"
+        android:layout_marginBottom="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ChartButton"
+        app:layout_constraintTop_toBottomOf="@+id/transacList"
         app:srcCompat="@drawable/shine" />
 
     <TextView
@@ -79,5 +79,27 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <ListView
+        android:id="@+id/transacList"
+        android:layout_width="409dp"
+        android:layout_height="114dp"
+        app:layout_constraintBottom_toTopOf="@+id/imageView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ChartButton"/>
+
+    <TextView
+        android:id="@+id/listLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/transacList"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ChartButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        android:text="Recent Transactions"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

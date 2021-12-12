@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -248,6 +249,12 @@ public class HomeScreenActivity extends AppCompatActivity {
         });
 
         dialog.show();
+    }
+
+
+    public void setUpTable(View view){
+        ListView transacList = findViewById(R.id.transacList);
+
     }
 
 }
