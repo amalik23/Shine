@@ -84,10 +84,10 @@ public class HomeScreenActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.homeScreenLogout) {
             logout();
-        } else if (item.getItemId() == R.id.homeScreenInfo) {
-            startActivity(new Intent(this, InfoActivity.class));
+        } else if (item.getItemId() == R.id.action_help) {
+            startActivity(new Intent(this, activity_instructions.class));
             return true;
-        } else if (item.getItemId() == R.id.homeScreenSettings) {
+        } else if (item.getItemId() == R.id.action_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
             return true;
         } else {
