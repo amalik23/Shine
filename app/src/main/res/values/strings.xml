@@ -27,7 +27,7 @@
     track of their expenses by entering in their transaction data.\n\nOn the home screen you can get started by adding a
     transaction from clicking the "New Transaction" button. From here, a popup will ask you enter several key items about
     the proposed transaction such as the amount, date of purchase, name of vendor, the category of the transaction,
-    and finally how often the transaction occurs.\n\nShine also utilizes graphs in order for you to better understand
-    your spending over longer periods of time and you can manipulate the graphs on the home screen.\n\nCredits for shine
+    and finally how often the transaction occurs.\n\nShine also utilizes graphs and lists in order for you to better understand
+    your spending over longer periods of time. Click the appropriate button for each on the home screen.\n\nCredits for shine
     go to Humza Ayub, Anish Malik, Raaha Azfar, and Ethan Root.</string>
 </resources>

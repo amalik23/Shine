@@ -38,6 +38,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.time.Year;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -108,9 +109,9 @@ public class ListViewScreenActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void transacTable(String month, int year){
+        //fetch database & user ID
         db = FirebaseFirestore.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
 
         db.collection("users").document(user.getUid()).collection(month.toString()+"-"+year)
                 .get()
@@ -135,28 +136,33 @@ public class ListViewScreenActivity extends AppCompatActivity {
                                 display.add("No entries for this month & year");
                             }
 
+                            //pulls relevant data from each transac, adds formatted string to display
                             String ven;
                             double amt;
                             String catag;
                             int dat;
                             double total = 0;
                             for(Transaction T : uTransacs){
+                                //abbreviate vendor name if need be
                                 ven = T.getVendor().trim();
                                 if(ven.length() > 11){
                                     ven = ven.substring(0,11) + "-";
                                 }
+                                //get amount, add to total
                                 amt = T.getAmount();
                                 total += amt;
+                                //abbreviate catagory if need be
                                 catag = T.getCategory().toString();
                                 if(catag.equals("RECREATION")){
                                     catag = "RECR.";
                                 }
                                 dat = T.getDate();
-                                display.add(String.format("%12.12s\t\t|\t%10.2f\t|\t%10s\t|\t%10d", ven, amt, catag, dat));
+                                display.add(String.format("%-12.12s\t\t|\t%10.2f\t|\t%10s\t|\t%10d", ven, amt, catag, dat));
                             }
-
+                            //update total
                             TextView tBox = findViewById(R.id.totalBox);
                             tBox.setText(String.format("Total: $%.2f", total));
+                            //apply adapter to listView
                             ArrayAdapter<String> adapter = new ArrayAdapter<String>
                                     (getApplicationContext(), android.R.layout.simple_list_item_1, display);
                             transacListView.setAdapter(adapter);
