@@ -7,7 +7,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -16,13 +15,15 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -108,7 +109,9 @@ public class HomeScreenActivity extends AppCompatActivity {
      */
     private void logout() {
         SharedPreferences sharedPreferences = getSharedPreferences("com.example.shine", Context.MODE_PRIVATE);
-        sharedPreferences.edit().putString(MainActivity.uidKey, "").apply();  // wipe out the email
+        sharedPreferences.edit().putString(MainActivity.uidKey, "").apply();
+        sharedPreferences.edit().putString(MainActivity.emailKey, "").apply();
+        sharedPreferences.edit().putString(MainActivity.nameKey, "").apply();
         startActivity(new Intent(this, MainActivity.class));
     }
 
