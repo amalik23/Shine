@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,12 +23,16 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
 import java.time.LocalDate;
@@ -36,6 +41,7 @@ import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.ResolverStyle;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -109,6 +115,11 @@ public class HomeScreenActivity extends AppCompatActivity {
     public void chartPage(View view){
         Intent graphIntent = new Intent(this, GraphsScreenActivity.class);
         startActivity(graphIntent);
+    }
+
+    public void goToListView(View view){
+        Intent listIntent = new Intent(this, ListViewScreenActivity.class);
+        startActivity(listIntent);
     }
 
     /**
@@ -249,34 +260,6 @@ public class HomeScreenActivity extends AppCompatActivity {
         });
 
         dialog.show();
-    }
-
-
-    public void setUpTable(View view){
-        //list component to be populated
-        ListView transacList = findViewById(R.id.transacList);
-
-        //firestore db and user to be referenced
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        //stolen code from graphScreenActivity, to get month & years for iteration
-        String[] monthItems = new String[]{"JANUARY","FEBRUARY","MARCH","APRIL",
-                "JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"};
-
-        int current_year = LocalDate.now().getYear();
-
-        String[] yearItems = new String[11];
-
-        for(int i = 0; i < 11; i ++){
-            yearItems[i] = ((Integer)(current_year - i)).toString();
-        }
-
-        LocalDate past = LocalDate.now().minusMonths(1);
-        Month month = past.getMonth();
-        int year = past.getYear();
-
-
     }
 
 }

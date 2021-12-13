@@ -17,13 +17,13 @@
 
         <!--Text view for displaying our text -->
         <TextView
-            android:id="@+id/idTVtext"
+            android:id="@+id/transacTextbox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:padding="3dp"
-            android:text="Category Text"
+            android:text="Filler_transacText"
             android:textAlignment="center"
             android:textColor="@color/black" />
 
