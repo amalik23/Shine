@@ -71,9 +71,8 @@ expenses and save money."
             android:layout_marginStart="33dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="33dp"
-            android:text="On the home screen you can get started by adding a
-transaction from clicking the New Transaction button. From here, a popup will ask you enter several key items about
-the proposed transaction such as the amount, date of purchase, name of vendor, the category of the transaction,
+            android:text="On the home screen you can get started by adding a transaction from clicking the New Transaction button. From here,
+a popup will ask you enter several key items about the proposed transaction such as the amount, date of purchase, name of vendor, the category of the transaction,
 and finally how often the transaction occurs.\n\nShine also utilizes graphs in order for you to better understand
 your spending over longer periods of time and you can manipulate the graphs on the home screen."
             android:textAlignment="center"
