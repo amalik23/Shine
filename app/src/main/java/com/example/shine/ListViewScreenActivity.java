@@ -38,6 +38,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.time.Year;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
@@ -101,24 +102,6 @@ public class ListViewScreenActivity extends AppCompatActivity {
         transacTable(month, year);
     }
 
-    private void setupPieChart(){
-        PieChart pieChart = findViewById(R.id.pie_chart);
-        pieChart.setDrawHoleEnabled(true);
-        pieChart.setUsePercentValues(true);
-        pieChart.setEntryLabelTextSize(12);
-        pieChart.setEntryLabelColor(Color.BLACK);
-        pieChart.setCenterText("Selected Month's Expense Breakdown");
-        pieChart.setCenterTextSize(22);
-        pieChart.getDescription().setEnabled(false);
-
-        Legend l = pieChart.getLegend();
-        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
-        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
-        l.setOrientation(Legend.LegendOrientation.VERTICAL);
-        l.setDrawInside(false);
-        l.setEnabled(true);
-    }
-
     private void setupListView(){
         ListView transacListView = findViewById(R.id.transacListV);
     }
@@ -128,95 +111,51 @@ public class ListViewScreenActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
+
         db.collection("users").document(user.getUid()).collection(month.toString()+"-"+year)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            setupListView();
                             ListView transacListView = findViewById(R.id.transacListV);
                             //list to collect transacs intoto & list for plaintexts for display
                             ArrayList<Transaction> uTransacs = new ArrayList<>();
                             ArrayList<String> display = new ArrayList<>();
 
+                            //scan in transacs from document into transaction arraylist
                             for (DocumentSnapshot document : task.getResult()) {
                                 Transaction transaction = document.toObject(Transaction.class);
                                 uTransacs.add(transaction);
                             }
-
-                            if(uTransacs.size() == 0){
+                            //sort list to be in reverse chronological order
+                            Collections.sort(uTransacs, Transaction.dateSorter);
+                            //insert top row for empty month
+                            if(uTransacs.size() == 0) {
                                 display.add("No entries for this month & year");
                             }
 
-                        } else {
-                            Log.d("TAG", "Error getting documents: ", task.getException());
-                        }
-                    }
-                });
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private void pieChart(String month, int year){
-        db = FirebaseFirestore.getInstance();
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        db.collection("users").document(user.getUid()).collection(month.toString()+"-"+year)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            setupPieChart();
-                            Double totalExp = 0.0;
-                            ArrayList<PieEntry> entries = new ArrayList<>();
-                            Hashtable<String, Double> SpendingByCat = new Hashtable<String, Double>();
-                            PieChart pieChart = findViewById(R.id.pie_chart);
-                            Log.d("TAG", "HERE");
-
-                            for (DocumentSnapshot document : task.getResult()) {
-                                Transaction transaction = document.toObject(Transaction.class);
-                                SpendingByCat.put(transaction.getCategory().name(),transaction.getAmount());
-                                totalExp = totalExp + transaction.getAmount();
-                            }
-                            Enumeration<String> e = SpendingByCat.keys();
-
-                            while (e.hasMoreElements()) {
-
-                                // Getting the key of a particular entry
-                                String key = e.nextElement();
-
-                                double spending = SpendingByCat.get(key);
-
-                                float perc = ((Double)(spending/totalExp)).floatValue();
-
-                                // Print and display the Rank and Name
-                                entries.add(new PieEntry(perc, key));
+                            String ven;
+                            double amt;
+                            String catag;
+                            int dat;
+                            for(Transaction T : uTransacs){
+                                ven = T.getVendor();
+                                if(ven.length() > 11){
+                                    ven = ven.substring(0,11) + "-";
+                                }
+                                amt = T.getAmount();
+                                catag = T.getCategory().toString();
+                                if(catag.equals("RECREATION")){
+                                    catag = "RECR.";
+                                }
+                                dat = T.getDate();
+                                display.add(String.format("%12.12s\t\t|\t%10.2f\t|\t%10s\t|\t%10d", ven, amt, catag, dat));
                             }
 
-                            if(entries.size() == 0){
-                                pieChart.setCenterText("No Transaction Data in Selected Month");
-                            }
-
-                            ArrayList<Integer> colors = new ArrayList<>();
-                            for (int color : ColorTemplate.MATERIAL_COLORS){
-                                colors.add(color);
-                            }
-                            for (int color : ColorTemplate.VORDIPLOM_COLORS){
-                                colors.add(color);
-                            }
-
-                            PieDataSet pieDataSet = new PieDataSet(entries,"Expense Categories");
-                            pieDataSet.setColors(colors);
-
-                            PieData pieData = new PieData(pieDataSet);
-                            pieData.setDrawValues(true);
-                            //pieData.setValueFormatter(new PercentFormatter(pieChart));
-                            pieData.setValueTextSize(12f);
-                            pieData.setValueTextColor(Color.BLACK);
-
-                            pieChart.setData(pieData);
-                            pieChart.invalidate();
+                            ArrayAdapter<String> adapter = new ArrayAdapter<String>
+                                    (getApplicationContext(), android.R.layout.simple_list_item_1, display);
+                            transacListView.setAdapter(adapter);
 
                         } else {
                             Log.d("TAG", "Error getting documents: ", task.getException());

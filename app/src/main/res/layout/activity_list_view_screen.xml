@@ -39,22 +39,22 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginTop="10dp"
+      android:layout_marginBottom="10dp"
       android:onClick="generateTable"
       android:text="List Transactions"
       android:textSize="20sp"
       android:background="@drawable/rounded_corner"
-      app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintHorizontal_bias="0.5"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintBottom_toTopOf="@id/transacListV"
+      app:layout_constraintBottom_toTopOf="@id/listHeader"
       app:layout_constraintVertical_bias="0.2" />
 
   <ListView
       android:id="@+id/transacListV"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:layout_marginTop="150dp"
+      android:layout_marginTop="200dp"
       android:layout_marginLeft="15dp"
       android:layout_marginRight="15dp"
       android:layout_marginBottom="15dp"
@@ -64,6 +64,21 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="parent"
       app:layout_constraintVertical_bias="0.0" />
+
+  <TextView
+      android:id="@+id/listHeader"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="15dp"
+      android:layout_marginRight="15dp"
+      android:text="Desc:		  	Amount($):	    	Catagory	   	Day"
+      android:textSize="20sp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintHorizontal_bias="0.5"
+      app:layout_constraintBottom_toTopOf="@+id/transacListV"
+      tools:layout_editor_absoluteX="16dp"
+      tools:layout_editor_absoluteY="110dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

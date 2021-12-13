@@ -2,6 +2,7 @@ package com.example.shine;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Comparator;
 
 public class Transaction {
 
@@ -56,4 +57,16 @@ public class Transaction {
     public String getVendor() {
         return vendor;
     }
+
+    /*Comparator for sorting the list by date*/
+    public static Comparator<Transaction> dateSorter = new Comparator<Transaction>() {
+        public int compare(Transaction t1, Transaction t2) {
+
+            int dat1 = t1.getDate();
+            int dat2 = t2.getDate();
+
+            //reverse chronological order
+            return dat2-dat1;
+        }
+    };
 }
