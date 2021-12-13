@@ -139,12 +139,14 @@ public class ListViewScreenActivity extends AppCompatActivity {
                             double amt;
                             String catag;
                             int dat;
+                            double total = 0;
                             for(Transaction T : uTransacs){
-                                ven = T.getVendor();
+                                ven = T.getVendor().trim();
                                 if(ven.length() > 11){
                                     ven = ven.substring(0,11) + "-";
                                 }
                                 amt = T.getAmount();
+                                total += amt;
                                 catag = T.getCategory().toString();
                                 if(catag.equals("RECREATION")){
                                     catag = "RECR.";
@@ -153,6 +155,8 @@ public class ListViewScreenActivity extends AppCompatActivity {
                                 display.add(String.format("%12.12s\t\t|\t%10.2f\t|\t%10s\t|\t%10d", ven, amt, catag, dat));
                             }
 
+                            TextView tBox = findViewById(R.id.totalBox);
+                            tBox.setText(String.format("Total: $%.2f", total));
                             ArrayAdapter<String> adapter = new ArrayAdapter<String>
                                     (getApplicationContext(), android.R.layout.simple_list_item_1, display);
                             transacListView.setAdapter(adapter);
