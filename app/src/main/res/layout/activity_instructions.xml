@@ -14,10 +14,11 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="0dp"
-            android:layout_height="195dp"
-            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginTop="4dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/shine" />
@@ -37,11 +38,11 @@
 
         <TextView
             android:id="@+id/textView2"
-            android:layout_width="353dp"
-            android:layout_height="74dp"
-            android:layout_marginStart="29dp"
+            android:layout_width="317dp"
+            android:layout_height="71dp"
+            android:layout_marginStart="33dp"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="29dp"
+            android:layout_marginEnd="33dp"
             android:text="Shine is a financial budgeting application to help users keep track of their
 expenses and save money."
             android:textAlignment="center"
@@ -65,16 +66,16 @@ expenses and save money."
 
         <TextView
             android:id="@+id/textView5"
-            android:layout_width="363dp"
-            android:layout_height="375dp"
-            android:layout_marginStart="27dp"
+            android:layout_width="326dp"
+            android:layout_height="376dp"
+            android:layout_marginStart="33dp"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="27dp"
+            android:layout_marginEnd="33dp"
             android:text="On the home screen you can get started by adding a
-    transaction from clicking the New Transaction button. From here, a popup will ask you enter several key items about
-    the proposed transaction such as the amount, date of purchase, name of vendor, the category of the transaction,
-    and finally how often the transaction occurs.\n\nShine also utilizes graphs in order for you to better understand
-    your spending over longer periods of time and you can manipulate the graphs on the home screen."
+transaction from clicking the New Transaction button. From here, a popup will ask you enter several key items about
+the proposed transaction such as the amount, date of purchase, name of vendor, the category of the transaction,
+and finally how often the transaction occurs.\n\nShine also utilizes graphs in order for you to better understand
+your spending over longer periods of time and you can manipulate the graphs on the home screen."
             android:textAlignment="center"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
